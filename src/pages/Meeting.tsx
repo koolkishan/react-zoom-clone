@@ -8,7 +8,7 @@ import {
   EuiPanel,
 } from "@elastic/eui";
 
-import { getDocs, query, where } from "firebase/firestore";
+import { getDocs, query } from "firebase/firestore";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -100,7 +100,12 @@ export default function Meeting() {
             textToCopy={`${process.env.REACT_APP_HOST}/join/${meetingId}`}
           >
             {(copy: any) => (
-              <EuiButtonIcon iconType="copy" onClick={copy} display="base" />
+              <EuiButtonIcon
+                iconType="copy"
+                onClick={copy}
+                display="base"
+                aria-label="meeting-copy"
+              />
             )}
           </EuiCopy>
         );

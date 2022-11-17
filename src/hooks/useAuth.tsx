@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../app/slices/AuthSlice";
@@ -22,5 +22,5 @@ export default function useAuth() {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [dispatch, navigate]);
 }

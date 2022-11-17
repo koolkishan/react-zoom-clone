@@ -3,6 +3,7 @@ import {
   EuiProvider,
   EuiThemeProvider,
 } from "@elastic/eui";
+import { EuiThemeColorMode } from "@elastic/eui/src/services/theme";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
@@ -24,14 +25,18 @@ export default function App() {
   const [isInitialEffect, setIsInitialEffect] = useState(true);
   const toasts = useAppSelector((zoom) => zoom.meetings.toasts);
 
-  const removeToast = (removedToast: any) => {
-    dispatch(setToasts(toasts.filter((toast) => toast.id !== removedToast.id)));
+  const removeToast = (removedToast: { id: string }) => {
+    dispatch(
+      setToasts(
+        toasts.filter((toast: { id: string }) => toast.id !== removedToast.id)
+      )
+    );
   };
-  const [theme, setTheme] = useState<any>("light");
+  const [theme, setTheme] = useState<EuiThemeColorMode>("light");
   useEffect(() => {
     const theme = localStorage.getItem("zoom-theme");
     if (theme) {
-      setTheme(theme);
+      setTheme(theme as EuiThemeColorMode);
     } else {
       localStorage.setItem("zoom-theme", "light");
     }
@@ -42,6 +47,7 @@ export default function App() {
     else {
       window.location.reload();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDarkTheme]);
 
   const overrides = {

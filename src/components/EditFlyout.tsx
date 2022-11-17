@@ -42,9 +42,9 @@ export default function EditFlyout({ closeFlyout, meeting }: any) {
       });
       setSelectedUser(foundUsers);
     }
-  }, [users]);
+  }, [users, meeting]);
 
-  const [showErrors, setShowErrors] = useState<any>({
+  const [showErrors] = useState<any>({
     meetingName: {
       show: false,
       message: [],

@@ -4,7 +4,6 @@ import { getDocs, query, where } from "firebase/firestore";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Header from "../components/Header";
 import useToast from "../hooks/useToast";
 import { firebaseAuth, meetingsRef } from "../utils/firebaseConfig";
 import { generateMeetingID } from "../utils/generateMeetingId";
@@ -54,7 +53,7 @@ export default function JoinMeeting() {
             } else navigate(user ? "/" : "/login");
           } else if (meeting.meetingType === "video-conference") {
             const index = meeting.invitedUsers.findIndex(
-              (invitedUser: any) => invitedUser === user?.uid
+              (invitedUser: string) => invitedUser === user?.uid
             );
             if (index !== -1 || isCreator) {
               if (meeting.meetingDate === moment().format("L")) {
@@ -84,7 +83,7 @@ export default function JoinMeeting() {
       }
     };
     getMeetingData();
-  }, [params.id, user, userLoaded]);
+  }, [params.id, user, userLoaded, createToast, navigate]);
   const myMeeting = async (element: any) => {
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       parseInt(process.env.REACT_APP_ZEGOCLOUD_APP_ID!),

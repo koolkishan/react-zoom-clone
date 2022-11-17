@@ -1,5 +1,4 @@
 import {
-  EuiFieldNumber,
   EuiFlexGroup,
   EuiForm,
   EuiFormRow,

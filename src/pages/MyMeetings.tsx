@@ -9,7 +9,7 @@ import {
 } from "@elastic/eui";
 import { getDocs, query, where } from "firebase/firestore";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 import EditFlyout from "../components/EditFlyout";
@@ -23,7 +23,7 @@ export default function MyMeetings() {
   const [meetings, setMeetings] = useState([]);
   const [showEditFlyout, setShowEditFlyout] = useState(false);
   const [editMeeting, setEditMeeting] = useState<any>(undefined);
-  const getMyMeetings = async () => {
+  const getMyMeetings = useCallback(async () => {
     const firestoreQuery = query(
       meetingsRef,
       where("createdBy", "==", userInfo?.uid)
@@ -36,10 +36,10 @@ export default function MyMeetings() {
       });
       setMeetings(myMeetings);
     }
-  };
+  }, [userInfo?.uid]);
   useEffect(() => {
     if (userInfo) getMyMeetings();
-  }, [userInfo]);
+  }, [userInfo, getMyMeetings]);
 
   const openEditFlyout = (meeting: string) => {
     setShowEditFlyout(true);
@@ -98,6 +98,7 @@ export default function MyMeetings() {
       render: (meeting: any) => {
         return (
           <EuiButtonIcon
+            aria-label="meeting-edit"
             iconType="indexEdit"
             color="danger"
             display="base"
@@ -120,7 +121,12 @@ export default function MyMeetings() {
             textToCopy={`${process.env.REACT_APP_HOST}/join/${meetingId}`}
           >
             {(copy: any) => (
-              <EuiButtonIcon iconType="copy" onClick={copy} display="base" />
+              <EuiButtonIcon
+                iconType="copy"
+                onClick={copy}
+                display="base"
+                aria-label="meeting-copy"
+              />
             )}
           </EuiCopy>
         );
