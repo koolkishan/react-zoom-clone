@@ -1,7 +1,13 @@
 import { EuiFieldNumber, EuiFormRow } from "@elastic/eui";
 import React from "react";
 
-function MeetingMaximumUsersField({ value, setSize }: any) {
+function MeetingMaximumUsersField({
+  value,
+  setSize,
+}: {
+  value: number;
+  setSize: React.Dispatch<React.SetStateAction<number>>;
+}) {
   return (
     <EuiFormRow label="Maximum People">
       <EuiFieldNumber

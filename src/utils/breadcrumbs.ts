@@ -1,12 +1,17 @@
 import { NavigateFunction } from "react-router-dom";
+import { BreadCrumbsType } from "./types";
 
-export const getDashboardBreadCrumbs = (navigate: NavigateFunction) => [
+export const getDashboardBreadCrumbs = (
+  navigate: NavigateFunction
+): Array<BreadCrumbsType> => [
   {
     text: "Dashboard",
   },
 ];
 
-export const getCreateMeetingBreadCrumbs = (navigate: NavigateFunction) => [
+export const getCreateMeetingBreadCrumbs = (
+  navigate: NavigateFunction
+): Array<BreadCrumbsType> => [
   {
     text: "Dashboard",
     href: "#",
@@ -19,7 +24,9 @@ export const getCreateMeetingBreadCrumbs = (navigate: NavigateFunction) => [
   },
 ];
 
-export const getOneOnOneMeetingBreadCrumbs = (navigate: NavigateFunction) => [
+export const getOneOnOneMeetingBreadCrumbs = (
+  navigate: NavigateFunction
+): Array<BreadCrumbsType> => [
   {
     text: "Dashboard",
     href: "#",
@@ -39,7 +46,9 @@ export const getOneOnOneMeetingBreadCrumbs = (navigate: NavigateFunction) => [
   },
 ];
 
-export const getVideoConferenceBreadCrumbs = (navigate: NavigateFunction) => [
+export const getVideoConferenceBreadCrumbs = (
+  navigate: NavigateFunction
+): Array<BreadCrumbsType> => [
   {
     text: "Dashboard",
     href: "#",
@@ -59,7 +68,9 @@ export const getVideoConferenceBreadCrumbs = (navigate: NavigateFunction) => [
   },
 ];
 
-export const getMyMeetingsBreadCrumbs = (navigate: NavigateFunction) => [
+export const getMyMeetingsBreadCrumbs = (
+  navigate: NavigateFunction
+): Array<BreadCrumbsType> => [
   {
     text: "Dashboard",
     href: "#",
@@ -72,7 +83,9 @@ export const getMyMeetingsBreadCrumbs = (navigate: NavigateFunction) => [
   },
 ];
 
-export const getMeetingsBreadCrumbs = (navigate: NavigateFunction) => [
+export const getMeetingsBreadCrumbs = (
+  navigate: NavigateFunction
+): Array<BreadCrumbsType> => [
   {
     text: "Dashboard",
     href: "#",

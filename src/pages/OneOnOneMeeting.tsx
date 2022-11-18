@@ -15,6 +15,7 @@ import useFetchUsers from "../hooks/useFetchUsers";
 import useToast from "../hooks/useToast";
 import { meetingsRef } from "../utils/firebaseConfig";
 import { generateMeetingID } from "../utils/generateMeetingId";
+import { FieldErrorType, UserType } from "../utils/types";
 
 export default function OneOnOneMeeting() {
   useAuth();
@@ -24,9 +25,12 @@ export default function OneOnOneMeeting() {
   const navigate = useNavigate();
 
   const [meetingName, setMeetingName] = useState("");
-  const [selectedUser, setSelectedUser] = useState<any>([]);
+  const [selectedUser, setSelectedUser] = useState<Array<UserType>>([]);
   const [startDate, setStartDate] = useState(moment());
-  const [showErrors, setShowErrors] = useState<any>({
+  const [showErrors, setShowErrors] = useState<{
+    meetingName: FieldErrorType;
+    meetingUser: FieldErrorType;
+  }>({
     meetingName: {
       show: false,
       message: [],
@@ -37,7 +41,7 @@ export default function OneOnOneMeeting() {
     },
   });
 
-  const onUserChange = (selectedOptions: any) => {
+  const onUserChange = (selectedOptions: Array<UserType>) => {
     setSelectedUser(selectedOptions);
   };
 

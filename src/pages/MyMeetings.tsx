@@ -16,13 +16,14 @@ import EditFlyout from "../components/EditFlyout";
 import Header from "../components/Header";
 import useAuth from "../hooks/useAuth";
 import { meetingsRef } from "../utils/firebaseConfig";
+import { MeetingType } from "../utils/types";
 
 export default function MyMeetings() {
   useAuth();
   const userInfo = useAppSelector((zoom) => zoom.auth.userInfo);
-  const [meetings, setMeetings] = useState([]);
+  const [meetings, setMeetings] = useState<Array<MeetingType>>([]);
   const [showEditFlyout, setShowEditFlyout] = useState(false);
-  const [editMeeting, setEditMeeting] = useState<any>(undefined);
+  const [editMeeting, setEditMeeting] = useState<MeetingType>();
   const getMyMeetings = useCallback(async () => {
     const firestoreQuery = query(
       meetingsRef,
@@ -30,9 +31,12 @@ export default function MyMeetings() {
     );
     const fetchedMeetings = await getDocs(firestoreQuery);
     if (fetchedMeetings.docs.length) {
-      const myMeetings: any = [];
+      const myMeetings: Array<MeetingType> = [];
       fetchedMeetings.forEach((meeting) => {
-        myMeetings.push({ docId: meeting.id, ...meeting.data() });
+        myMeetings.push({
+          docId: meeting.id,
+          ...(meeting.data() as MeetingType),
+        });
       });
       setMeetings(myMeetings);
     }
@@ -41,7 +45,7 @@ export default function MyMeetings() {
     if (userInfo) getMyMeetings();
   }, [userInfo, getMyMeetings]);
 
-  const openEditFlyout = (meeting: string) => {
+  const openEditFlyout = (meeting: MeetingType) => {
     setShowEditFlyout(true);
     setEditMeeting(meeting);
   };
@@ -68,7 +72,7 @@ export default function MyMeetings() {
     {
       field: "",
       name: "Status",
-      render: (meeting: any) => {
+      render: (meeting: MeetingType) => {
         if (meeting.status) {
           if (meeting.meetingDate === moment().format("L")) {
             return (
@@ -95,7 +99,7 @@ export default function MyMeetings() {
       field: "",
       name: "Edit",
       width: "5%",
-      render: (meeting: any) => {
+      render: (meeting: MeetingType) => {
         return (
           <EuiButtonIcon
             aria-label="meeting-edit"
@@ -151,7 +155,7 @@ export default function MyMeetings() {
         </EuiFlexItem>
       </EuiFlexGroup>
       {showEditFlyout && (
-        <EditFlyout closeFlyout={closeEditFlyout} meeting={editMeeting} />
+        <EditFlyout closeFlyout={closeEditFlyout} meeting={editMeeting!} />
       )}
     </div>
   );

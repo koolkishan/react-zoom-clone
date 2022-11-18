@@ -17,29 +17,31 @@ import Header from "../components/Header";
 import useAuth from "../hooks/useAuth";
 
 import { meetingsRef } from "../utils/firebaseConfig";
+import { MeetingType } from "../utils/types";
 
 export default function Meeting() {
   useAuth();
   const userInfo = useAppSelector((zoom) => zoom.auth.userInfo);
-  const [meetings, setMeetings] = useState([]);
+  const [meetings, setMeetings] = useState<Array<MeetingType>>([]);
 
   useEffect(() => {
     const getMyMeetings = async () => {
       const firestoreQuery = query(meetingsRef);
       const fetchedMeetings = await getDocs(firestoreQuery);
       if (fetchedMeetings.docs.length) {
-        const myMeetings: any = [];
+        const myMeetings: Array<MeetingType> = [];
         fetchedMeetings.forEach((meeting) => {
-          const data = meeting.data();
-          if (data.createdBy === userInfo?.uid) myMeetings.push(meeting.data());
+          const data = meeting.data() as MeetingType;
+          if (data.createdBy === userInfo?.uid)
+            myMeetings.push(meeting.data() as MeetingType);
           else if (data.meetingType === "anyone-can-join")
-            myMeetings.push(meeting.data());
+            myMeetings.push(meeting.data() as MeetingType);
           else {
             const index = data.invitedUsers.findIndex(
               (user: string) => user === userInfo?.uid
             );
             if (index !== -1) {
-              myMeetings.push(meeting.data());
+              myMeetings.push(meeting.data() as MeetingType);
             }
           }
         });
@@ -67,7 +69,7 @@ export default function Meeting() {
       field: "",
       name: "Status",
 
-      render: (meeting: any) => {
+      render: (meeting: MeetingType) => {
         if (meeting.status) {
           if (meeting.meetingDate === moment().format("L")) {
             return (

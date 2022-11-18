@@ -22,6 +22,7 @@ import useFetchUsers from "../hooks/useFetchUsers";
 import useToast from "../hooks/useToast";
 import { meetingsRef } from "../utils/firebaseConfig";
 import { generateMeetingID } from "../utils/generateMeetingId";
+import { FieldErrorType, UserType } from "../utils/types";
 
 export default function VideoConference() {
   useAuth();
@@ -31,10 +32,13 @@ export default function VideoConference() {
   const navigate = useNavigate();
 
   const [meetingName, setMeetingName] = useState("");
-  const [selectedUser, setSelectedUser] = useState<any>([]);
+  const [selectedUser, setSelectedUser] = useState<Array<UserType>>([]);
   const [startDate, setStartDate] = useState(moment());
   const [size, setSize] = useState(1);
-  const [showErrors, setShowErrors] = useState<any>({
+  const [showErrors, setShowErrors] = useState<{
+    meetingName: FieldErrorType;
+    meetingUsers: FieldErrorType;
+  }>({
     meetingName: {
       show: false,
       message: [],
@@ -46,7 +50,7 @@ export default function VideoConference() {
   });
   const [anyoneCanJoin, setAnyoneCanJoin] = useState(false);
 
-  const onUserChange = (selectedOptions: any) => {
+  const onUserChange = (selectedOptions: Array<UserType>) => {
     setSelectedUser(selectedOptions);
   };
 
@@ -83,7 +87,7 @@ export default function VideoConference() {
         meetingType: anyoneCanJoin ? "anyone-can-join" : "video-conference",
         invitedUsers: anyoneCanJoin
           ? []
-          : selectedUser.map((user: any) => user.uid),
+          : selectedUser.map((user: UserType) => user.uid),
         meetingDate: startDate.format("L"),
         maxUsers: anyoneCanJoin ? 100 : size,
         status: true,

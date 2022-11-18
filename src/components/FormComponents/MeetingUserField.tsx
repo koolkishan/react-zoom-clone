@@ -11,7 +11,17 @@ function MeetingUserField({
   singleSelection = false,
   isClearable,
   placeholder,
-}: any) {
+}: {
+  label: string;
+  isInvalid: boolean;
+  error: Array<string>;
+  options: any;
+  onChange: any;
+  selectedOptions: any;
+  singleSelection?: { asPlainText: boolean } | boolean;
+  isClearable: boolean;
+  placeholder: string;
+}) {
   return (
     <EuiFormRow label={label} isInvalid={isInvalid} error={error}>
       <EuiComboBox

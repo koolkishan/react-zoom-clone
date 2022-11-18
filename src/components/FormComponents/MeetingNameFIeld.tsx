@@ -8,9 +8,15 @@ function MeetingNameField({
   error,
   placeholder,
   value,
-
   setMeetingName,
-}: any) {
+}: {
+  label: string;
+  isInvalid: boolean;
+  error: Array<string>;
+  placeholder: string;
+  value: string;
+  setMeetingName: React.Dispatch<React.SetStateAction<string>>;
+}) {
   return (
     <ThemeSelector>
       <EuiFormRow label={label} isInvalid={isInvalid} error={error}>

@@ -21,13 +21,18 @@ import {
   getVideoConferenceBreadCrumbs,
 } from "../utils/breadcrumbs";
 import { firebaseAuth } from "../utils/firebaseConfig";
+import { BreadCrumbsType } from "../utils/types";
 
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const userName = useAppSelector((zoomApp) => zoomApp.auth.userInfo?.name);
   const isDarkTheme = useAppSelector((zoomApp) => zoomApp.auth.isDarkTheme);
-  const [breadCrumbs, setBreadCrumbs] = useState<any>(undefined);
+  const [breadCrumbs, setBreadCrumbs] = useState<Array<BreadCrumbsType>>([
+    {
+      text: "Dashboard",
+    },
+  ]);
   const dispatch = useDispatch();
   const [isResponsive, setIsResponsive] = useState(false);
 
